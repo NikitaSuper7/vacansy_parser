@@ -1,31 +1,40 @@
-from src.abstract_classes import Parser
-import requests
+from src.hh import HH
 
 
-class Vacansy(Parser):
-    """Класс получения вакансий."""
+class Vacansy:
+    """Класс для работы с вакансиями"""
 
-    def __init__(self, url, headers, params):
-        self.url = url  # 'https://api.hh.ru/vacancies'
-        self.headers = headers  # {'User-Agent': 'HH-User-Agent'}
-        self.params = params  # {'text': '', 'page': 0, 'per_page': 100}
-        self.vacancies = []
+    def __init__(self, id: str, name: str, description: str, salary: float, location: str, link: str, type: str):
+        self.id = id
+        self.name = name
+        self.description = description
+        self.salary = salary
+        self.location = location
+        self.link = link
+        self.type = type
 
-    def get_response(self, keyword):
-        self.params['text'] = keyword
-        while self.params.get('page') != 20:
-            response = requests.get(url=self.url, headers=self.headers, params=self.params)
-            vacansies = response.json()['items']
-            self.vacancies.extend(vacansies)
-            self.params['page'] += 1
+    def __repr__(self):
+        return (f"{self.__class__.__name__} "
+                f"({self.id}, {self.name}, {self.description}, {self.salary}, {self.location}, {self.link}, {self.type})")
 
-    def __str__(self):
-        return self.vacancies
+    @classmethod
+    def make_objects(cls, all_vacansies: HH):
+        list_vacansy = []
+        for vacansy in all_vacansies.vacancies:
+            name = f"{vacansy['id']}"
+            list_vacansy.append(name)
+            list_vacansy[-1] = cls(vacansy['id'], vacansy['name'], vacansy['snippet']['requirement'],
+                                   vacansy['salary'],
+                                   vacansy['area']['name'], vacansy['alternate_url'],
+                                   vacansy['type']['id'])
+
+        return list_vacansy
 
 
-emp_1 = Vacansy('https://api.hh.ru/vacancies', {'User-Agent': 'HH-User-Agent'},
-                {'text': '', 'page': 0, 'per_page': 100})
+if __name__ == '__main__':
+    emp_1 = HH('https://api.hh.ru/vacancies', {'User-Agent': 'HH-User-Agent'},
+               {'text': '', 'page': 0, 'per_page': 100})
 
-emp_1.get_response('Python')
+    emp_1.get_response('Python')
 
-print(emp_1.vacancies)
+    print(Vacansy.make_objects(emp_1))
