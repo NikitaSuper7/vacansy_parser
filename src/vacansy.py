@@ -4,25 +4,27 @@ from src.hh import HH
 class Vacansy:
     """Класс для работы с вакансиями"""
 
-    def __init__(self, id: str, name: str, description: str, salary: float, location: str, link: str, type: str):
-        self.id = id
+    def __init__(self, vac_id: str, name: str, description: str, salary: float, location: str, link: str, vac_type: str):
+        self.vac_id = vac_id
         self.name = name
         self.description = description
         self.salary = salary
         self.location = location
         self.link = link
-        self.type = type
+        self.vac_type = vac_type
 
     def salary_validator(self):
+        """валидатор зарплаты"""
         if self.salary is None:
             self.salary = 0
 
     def __lt__(self, other):
+        """Сравнивает зарплаты объектов"""
         return self.salary < other.salary
 
     def __repr__(self):
         return (f"{self.__class__.__name__} "
-                f"({self.id}, {self.name}, {self.description}, {self.salary}, {self.location}, {self.link}, {self.type})")
+                f"({self.vac_id}, {self.name}, {self.description}, {self.salary}, {self.location}, {self.link}, {self.vac_type})")
 
     @classmethod
     def make_objects(cls, all_vacansies: HH):
@@ -38,11 +40,11 @@ class Vacansy:
 
         return list_vacansy
 
-if __name__ == '__main__':
-    emp_1 = HH('https://api.hh.ru/vacancies', {'User-Agent': 'HH-User-Agent'},
-               {'text': '', 'page': 0, 'per_page': 100})
-
-    emp_1.get_response('Python, developer')
-
-    print(Vacansy.make_objects(emp_1)[0].salary)
+# if __name__ == '__main__':
+#     emp_1 = HH('https://api.hh.ru/vacancies', {'User-Agent': 'HH-User-Agent'},
+#                {'text': '', 'page': 0, 'per_page': 100})
+#
+#     emp_1.get_response('Python, developer')
+#
+#     print(Vacansy.make_objects(emp_1)[0].salary)
 

@@ -7,3 +7,9 @@ class Parser(ABC):
         pass
     def get_response(self, keyword):
         pass
+
+class AbsSaver(ABC):
+    def __init__(self):
+        pass
+    def json_saver(self):
+        pass

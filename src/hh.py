@@ -19,8 +19,8 @@ class HH(Parser):
             response = requests.get(url=self.url, headers=self.headers, params=self.params)
             vacansies = response.json()['items']
             self.vacancies.extend(vacansies)
-            with open('vacansies.json', 'w',  encoding='utf-8') as e:
-                json.dump(self.vacancies, e, ensure_ascii=False, indent=4)
+            # with open('vacansies.json', 'w',  encoding='utf-8') as e:
+            #     json.dump(self.vacancies, e, ensure_ascii=False, indent=4)
             self.params['page'] += 1
 
     def __str__(self):
