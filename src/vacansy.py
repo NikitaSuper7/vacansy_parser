@@ -13,6 +13,13 @@ class Vacansy:
         self.link = link
         self.type = type
 
+    def salary_validator(self):
+        if self.salary is None:
+            self.salary = 0
+
+    def __lt__(self, other):
+        return self.salary < other.salary
+
     def __repr__(self):
         return (f"{self.__class__.__name__} "
                 f"({self.id}, {self.name}, {self.description}, {self.salary}, {self.location}, {self.link}, {self.type})")
@@ -27,14 +34,15 @@ class Vacansy:
                                    vacansy['salary'],
                                    vacansy['area']['name'], vacansy['alternate_url'],
                                    vacansy['type']['id'])
+            list_vacansy[-1].salary_validator()
 
         return list_vacansy
-
 
 if __name__ == '__main__':
     emp_1 = HH('https://api.hh.ru/vacancies', {'User-Agent': 'HH-User-Agent'},
                {'text': '', 'page': 0, 'per_page': 100})
 
-    emp_1.get_response('Python')
+    emp_1.get_response('Python, developer')
 
-    print(Vacansy.make_objects(emp_1))
+    print(Vacansy.make_objects(emp_1)[0].salary)
+
