@@ -12,15 +12,20 @@ def user_interaction():
     request_1.get_response(search_request)
 
     Vacansy.make_objects(request_1)
-    save_vac = Saver(Vacansy.sorter_salary())
-    save_vac.json_saver()
+    Vacansy.sorter_salary()
+    str_vacansy = Saver(Vacansy.all_vacancies)
+    str_vacansy.json_saver()
 
     with open('src/vacansies.json', 'r', encoding='utf-8') as file:
-        respond = json.load(file)
-        respond = respond[0:how_many]
-
-    print(respond, len(respond), sep='\n')
-    return respond
+        responds = json.load(file)
+        responds = responds[0:how_many]
+    rang_vac = 1
+    for respond in responds:
+        print(f"\nRang № {rang_vac}")
+        rang_vac += 1
+        for key, value in respond.items():
+            print(key, value, end='\n')
+    return responds
 
 
 if __name__ == '__main__':
