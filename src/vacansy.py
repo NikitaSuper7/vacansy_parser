@@ -4,7 +4,7 @@ from src.hh import HH
 class Vacansy:
     """Класс для работы с вакансиями"""
     all_vacancies: list
-
+    # all_vacancies = []
     def __init__(self, vac_id: str, name: str, description: str, salary: float, location: str, link: str, vac_type: str):
         self.vac_id = vac_id
         self.name = name
@@ -31,7 +31,7 @@ class Vacansy:
 
     @classmethod
     def sorter_salary(cls):
-        cls.all_vacancies = cls.all_vacancies.sort(reverse=True)
+        cls.all_vacancies.sort(reverse=True)
         return cls.all_vacancies
 
     @classmethod
@@ -65,6 +65,8 @@ class Vacansy:
 #                {'text': '', 'page': 0, 'per_page': 100})
 #
 #     emp_1.get_response('Python, developer')
-#     list_vac = Vacansy.make_objects(emp_1)
+#     Vacansy.make_objects(emp_1)
 #     Vacansy.sorter_salary()
-#     print(list_vac)
+
+    # for vacansy in Vacansy.all_vacancies:
+    #     print(vacansy.salary)

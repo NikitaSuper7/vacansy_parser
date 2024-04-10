@@ -43,7 +43,8 @@ class Saver:
 #                {'text': '', 'page': 0, 'per_page': 100})
 #
 #     emp_1.get_response('Python, developer')
-#
-#     str_vacansy = Saver(Vacansy.make_objects(emp_1))
-#     # str_vacansy.json_saver()
-#     print(str_vacansy.all_vacancies)
+#     Vacansy.make_objects(emp_1)
+#     Vacansy.sorter_salary()
+#     str_vacansy = Saver(Vacansy.all_vacancies)
+#     str_vacansy.json_saver()
+#     # print(str_vacansy.all_vacancies)
