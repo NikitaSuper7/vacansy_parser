@@ -12,8 +12,7 @@ def user_interaction():
     request_1.get_response(search_request)
 
     Vacansy.make_objects(request_1)
-    sort_vacancies = Vacansy.sorter_salary()
-    save_vac = Saver(sort_vacancies)
+    save_vac = Saver(Vacansy.sorter_salary())
     save_vac.json_saver()
 
     with open('src/vacansies.json', 'r', encoding='utf-8') as file:
