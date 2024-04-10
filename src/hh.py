@@ -2,11 +2,12 @@ from src.abstract_classes import Parser
 import requests
 import json
 
-
+hh_headers = {'User-Agent': 'HH-User-Agent'}
+hh_params = {'text': '', 'page': 0, 'per_page': 100}
 class HH(Parser):
     """Класс получения вакансий."""
 
-    def __init__(self, url, headers, params):
+    def __init__(self, url='https://api.hh.ru/vacancies', headers=hh_headers, params=hh_params):
         super().__init__(url, headers, params)
         self.url = url  # 'https://api.hh.ru/vacancies'
         self.headers = headers  # {'User-Agent': 'HH-User-Agent'}
@@ -25,5 +26,3 @@ class HH(Parser):
 
     def __str__(self):
         return self.vacancies
-
-

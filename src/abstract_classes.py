@@ -8,8 +8,13 @@ class Parser(ABC):
     def get_response(self, keyword):
         pass
 
-class AbsSaver(ABC):
+class AbsVacansy(ABC):
     def __init__(self):
         pass
     def json_saver(self):
+        pass
+    def json_load(self):
+        pass
+
+    def del_vacansy(self):
         pass

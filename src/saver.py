@@ -1,11 +1,11 @@
 import json
 
-from src.abstract_classes import AbsSaver
+# from src.abstract_classes import AbsSaver
 from src.vacansy import Vacansy
 from src.hh import HH
 
 
-class Saver(AbsSaver):
+class Saver:
     def __init__(self, all_vacancies: list):
         self.all_vacancies = all_vacancies
 
@@ -18,6 +18,7 @@ class Saver(AbsSaver):
         # self.vac_type = vac_type
 
     def json_saver(self):
+        """Переформатирует список объекто в JSON-объекты и сохраняет в файл."""
         total_vacansies = []
         for vacansy in self.all_vacancies:
             dict_vacansy = {'id': vacansy.vac_id, 'name': vacansy.name,
@@ -30,12 +31,19 @@ class Saver(AbsSaver):
         with open('vacansies.json', 'w', encoding='utf-8') as file:
             json.dump(total_vacansies, file, ensure_ascii=False, indent=4)
 
+    def json_loader(self, file: json, **kwargs):
+        """Достает нужные вакансии"""
+        pass
 
-if __name__ == '__main__':
-    emp_1 = HH('https://api.hh.ru/vacancies', {'User-Agent': 'HH-User-Agent'},
-               {'text': '', 'page': 0, 'per_page': 100})
 
-    emp_1.get_response('Python, developer')
 
-    str_vacansy = Saver(Vacansy.make_objects(emp_1))
-    str_vacansy.json_saver()
+
+# if __name__ == '__main__':
+#     emp_1 = HH('https://api.hh.ru/vacancies', {'User-Agent': 'HH-User-Agent'},
+#                {'text': '', 'page': 0, 'per_page': 100})
+#
+#     emp_1.get_response('Python, developer')
+#
+#     str_vacansy = Saver(Vacansy.make_objects(emp_1))
+#     # str_vacansy.json_saver()
+#     print(str_vacansy.all_vacancies)
