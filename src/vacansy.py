@@ -31,7 +31,7 @@ class Vacansy:
 
     @classmethod
     def sorter_salary(cls):
-        cls.all_vacancies.sort(reverse=True)
+        cls.all_vacancies = cls.all_vacancies.sort(reverse=True)
         return cls.all_vacancies
 
     @classmethod
