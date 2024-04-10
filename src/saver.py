@@ -31,12 +31,18 @@ class Saver:
         with open('vacansies.json', 'w', encoding='utf-8') as file:
             json.dump(total_vacansies, file, ensure_ascii=False, indent=4)
 
-    def json_loader(self, file: json, **kwargs):
+    def json_loader(self, how_many: int,  file: json = 'src/vacansies.json'):
         """Достает нужные вакансии"""
-        pass
-
-
-
+        with open('src/vacansies.json', 'r', encoding='utf-8') as file:
+            responds = json.load(file)
+            responds = responds[0:how_many]
+        rang_vac = 1
+        for respond in responds:
+            print(f"\nRang № {rang_vac}")
+            rang_vac += 1
+            for key, value in respond.items():
+                print(key, value, end='\n')
+        return responds
 
 # if __name__ == '__main__':
 #     emp_1 = HH('https://api.hh.ru/vacancies', {'User-Agent': 'HH-User-Agent'},
