@@ -1,21 +1,15 @@
 import json
 
-# from src.abstract_classes import AbsSaver
+from src.abstract_classes import AbsRedactor
 from src.vacansy import Vacansy
 from src.hh import HH
 
 
-class Saver:
+class JsonSaver(AbsRedactor):
+    "Класс сохраняет, добавляет, удаляет вакансии из/в файл."
     def __init__(self, all_vacancies: list):
         self.all_vacancies = all_vacancies
 
-        # self.id = vac_id
-        # self.name = name
-        # self.description = description
-        # self.salary = salary
-        # self.location = location
-        # self.link = link
-        # self.vac_type = vac_type
 
     def json_saver(self):
         """Переформатирует список объекто в JSON-объекты и сохраняет в файл."""
@@ -31,7 +25,7 @@ class Saver:
         with open('vacansies.json', 'w', encoding='utf-8') as file:
             json.dump(total_vacansies, file, ensure_ascii=False, indent=4)
 
-    def json_loader(self, how_many: int,  file: json = 'src/vacansies.json'):
+    def json_loader(self, how_many: int, file: json = 'src/vacansies.json'):
         """Достает нужные вакансии"""
         with open('src/vacansies.json', 'r', encoding='utf-8') as file:
             responds = json.load(file)
@@ -44,13 +38,35 @@ class Saver:
                 print(key, value, end='\n')
         return responds
 
+    def _json_adder(self, vac_id: str, name: str, description: str, salary: float, location: str, link: str,
+                   vac_type: str):
+        """Добавляет вакансию в файл"""
+        vac_dict = {"id": vac_id, "name": name, "description": description,
+                    "salary": salary, "location": location, "link": link,
+                    "type": vac_type}
+        with open('vacansies.json', 'a', encoding='utf-f') as file:
+            json.dump(vac_dict, file, ensure_ascii=False, indent=4)
+
+    def _json_deleter(self, vac_id: str):
+        """Удаляет вакансии из файла."""
+        with open('vacansies.json', 'r', encoding='utf-8') as file:
+            responds = json.load(file)
+            for respond in range(len(responds)):
+                if responds[respond]['id'] == vac_id:
+                    responds.pop(respond)
+                    break
+        with open('vacansies.json', 'w', encoding='utf-8') as file:
+            json.dump(responds, file, ensure_ascii=False, indent=4)
+
 # if __name__ == '__main__':
 #     emp_1 = HH('https://api.hh.ru/vacancies', {'User-Agent': 'HH-User-Agent'},
 #                {'text': '', 'page': 0, 'per_page': 100})
 #
 #     emp_1.get_response('Python, developer')
-#     Vacansy.make_objects(emp_1)
-#     Vacansy.sorter_salary()
-#     str_vacansy = Saver(Vacansy.all_vacancies)
+#     Vacansy._make_objects(emp_1)
+#     Vacansy._sorter_salary()
+#     Vacansy.salary_range([50_000, 100_000])
+#
+#     str_vacansy = JsonSaver(Vacansy.all_vacancies)
 #     str_vacansy.json_saver()
-#     # print(str_vacansy.all_vacancies)
+#     # str_vacansy._json_deleter()
