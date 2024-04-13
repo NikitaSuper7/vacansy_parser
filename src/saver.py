@@ -11,7 +11,7 @@ class JsonSaver(AbsRedactor):
     def __init__(self, all_vacancies: list):
         self.all_vacancies = all_vacancies
 
-    def json_saver(self):
+    def _saver(self):
         """Переформатирует список объекто в JSON-объекты и сохраняет в файл."""
         total_vacansies = []
 
@@ -26,7 +26,7 @@ class JsonSaver(AbsRedactor):
         with open('vacansies.json', 'w', encoding='utf-8') as file:
             json.dump(total_vacansies, file, ensure_ascii=False, indent=4)
 
-    def json_loader(self, how_many: int, file: json = 'src/vacansies.json'):
+    def _loader(self, how_many: int, file: json = 'src/vacansies.json'):
         """Достает нужные вакансии"""
         with open('src/vacansies.json', 'r', encoding='utf-8') as file:
             responds = json.load(file)
@@ -39,7 +39,7 @@ class JsonSaver(AbsRedactor):
                 print(key, value, end='\n')
         return responds
 
-    def _json_adder(self, vac_id: str, name: str, description: str, salary: float, location: str, link: str,
+    def _adder(self, vac_id: str, name: str, description: str, salary: float, location: str, link: str,
                     vac_type: str):
         """Добавляет вакансию в файл"""
         vac_dict = {"id": vac_id, "name": name, "description": description,
@@ -51,7 +51,7 @@ class JsonSaver(AbsRedactor):
         with open('vacansies.json', 'w', encoding='utf-8') as file:
             json.dump(data, file, ensure_ascii=False, indent=4)
 
-    def _json_deleter(self, vac_id: str):
+    def _deleter(self, vac_id: str):
         """Удаляет вакансии из файла."""
         with open('vacansies.json', 'r', encoding='utf-8') as file:
             responds = json.load(file)
@@ -63,17 +63,17 @@ class JsonSaver(AbsRedactor):
             json.dump(responds, file, ensure_ascii=False, indent=4)
 
 
-if __name__ == '__main__':
-    emp_1 = HH('https://api.hh.ru/vacancies', {'User-Agent': 'HH-User-Agent'},
-               {'text': '', 'page': 0, 'per_page': 100})
-
-    emp_1.get_response('Python, developer')
-    Vacansy._make_objects(emp_1)
-    Vacansy._sorter_salary()
-    Vacansy._salary_range([50_000, 100_000])
-
-    str_vacansy = JsonSaver(Vacansy.all_vacancies)
-    str_vacansy.json_saver()
-
-    str_vacansy._json_adder(vac_id='123', name='test', description='test', salary=75_000, location='here is',
-                            link='test_ru', vac_type='open_test')
+# if __name__ == '__main__':
+#     emp_1 = HH('https://api.hh.ru/vacancies', {'User-Agent': 'HH-User-Agent'},
+#                {'text': '', 'page': 0, 'per_page': 100})
+#
+#     emp_1.get_response('Python, developer')
+#     Vacansy._make_objects(emp_1)
+#     Vacansy._sorter_salary()
+#     Vacansy._salary_range([50_000, 100_000])
+#
+#     str_vacansy = JsonSaver(Vacansy.all_vacancies)
+#     str_vacansy._saver()
+#
+#     str_vacansy._adder(vac_id='123', name='test', description='test', salary=75_000, location='here is',
+#                             link='test_ru', vac_type='open_test')

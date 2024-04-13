@@ -11,10 +11,10 @@ class Parser(ABC):
 class AbsRedactor(ABC):
     def __init__(self):
         pass
-    def json_saver(self):
+    def _saver(self):
         pass
-    def json_load(self):
+    def _loader(self):
         pass
 
-    def del_vacansy(self):
+    def _deleter(self):
         pass
